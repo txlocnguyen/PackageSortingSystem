@@ -92,18 +92,24 @@ class Main:
             pkgInfo = pkgsTable.getVal(pkgIndex - 1)
             (h, m, s) = pkgInfo[9].split(":")
             pkgTime = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+            (h, m, s) = pkgInfo[8].split(":")
+            pkgTimeHub = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
 
             # Compare the package time against user time and display status of the package accordingly
-            if usrTime < pkgTime:
-                pkgStatus = "In Transit"
+            if usrTime < pkgTimeHub:
+                pkgStatus = "At the hub"
+            elif pkgTimeHub <= usrTime < pkgTime:
+                pkgStatus = "En Route"
             else:
                 pkgStatus = "Delivered"
 
             # Display the package information
-            print("ID:%3d   Address:%40s   Deadline:%15s    Status: %10s    Delivery Time: %7s " % (pkgIndex, pkgInfo[1], pkgInfo[5], pkgStatus, pkgTime))
+            print("ID:%3d   Address:%40s, %16s %5s  Weight:%3s   Deadline:%10s    Status: %10s    Delivery "
+                  "Time: %7s " % (pkgIndex, pkgInfo[1], pkgInfo[2], pkgInfo[4], pkgInfo[6], pkgInfo[5], pkgStatus,
+                                  pkgTime))
 
             # Increment the package index
             pkgIndex += 1
 
         # Ask for user input again to loop the program over and over until the user type in 'quit'
-        usrInput = input("Please enter 'quit' to exit the program or press enter to continue: ")
+        usrInput = input("Please enter 'quit' to exit the program or press enter twice to continue: ")
