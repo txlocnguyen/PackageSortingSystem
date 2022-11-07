@@ -24,7 +24,7 @@ for i in range(1, totalPkgs + 1):
 for i in range(1, totalPkgs + 1):
     pkgInfo = pkgsTable.getVal(i - 1)
     # Load packages with time restriction or may need to be shipped together onto truck number 1
-    if pkgInfo[5] != 'EOD' and pkgInfo[7] == 'None' or ('Must' in pkgInfo[7]):
+    if pkgInfo[5] != 'EOD' and pkgInfo[7] == 'None' or ('Must' in pkgInfo[7]) or pkgInfo[0] == '19':
         truckTable[1]["slot_{0}".format(len(truckTable[1]))] = i
         pkgMasterList.remove(int(i))
     # Load packages for 2nd trip of truck 1 with time restriction
